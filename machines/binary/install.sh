@@ -13,6 +13,15 @@ sudo chown root:root /etc/hosts
 
 echo " "
 echo "---------------------------------------------------------------------------------------------------------------"
+echo "----- adding mysql repo"
+echo "---------------------------------------------------------------------------------------------------------------"
+echo " "
+
+sudo mv /tmp/install/mysql.repo /etc/yum.repos.d/mysql.repo
+
+
+echo " "
+echo "---------------------------------------------------------------------------------------------------------------"
 echo "----- updating hostname"
 echo "---------------------------------------------------------------------------------------------------------------"
 echo " "
@@ -25,7 +34,7 @@ echo "----- get ambari repo"
 echo "---------------------------------------------------------------------------------------------------------------"
 echo " "
 
-wget -nv http://public-repo-1.hortonworks.com/ambari/centos7/2.x/updates/2.6.0.0/ambari.repo -O /etc/yum.repos.d/ambari.repo
+wget -nv http://public-repo-1.hortonworks.com/ambari/centos7/2.x/updates/2.6.1.3/ambari.repo -O /etc/yum.repos.d/ambari.repo
 
 
 echo " "
