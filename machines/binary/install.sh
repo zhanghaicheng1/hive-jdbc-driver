@@ -29,11 +29,24 @@ wget -nv http://public-repo-1.hortonworks.com/ambari/centos7/2.x/updates/2.7.0.0
 
 echo " "
 echo "---------------------------------------------------------------------------------------------------------------"
+echo "----- installing mysql"
+echo "---------------------------------------------------------------------------------------------------------------"
+echo " "
+
+sudo su - << EOF
+    wget http://repo.mysql.com/mysql80-community-release-el7-1.noarch.rpm
+    sudo rpm -Uvh mysql80-community-release-el7-1.noarch.rpm
+    yum install mysql-community-server -y
+EOF
+
+
+echo " "
+echo "---------------------------------------------------------------------------------------------------------------"
 echo "----- running yum install"
 echo "---------------------------------------------------------------------------------------------------------------"
 echo " "
 
-yum install ambari-server ambari-agent -y && yum clean all
+yum install ambari-server ambari-agent -y
 
 echo " "
 echo "---------------------------------------------------------------------------------------------------------------"
@@ -43,15 +56,16 @@ echo " "
 
 sed -i "s/^hostname=localhost/hostname=jdbc-binary.hdp.local/g" /etc/ambari-agent/conf/ambari-agent.ini
 
-# echo " "
-# echo "---------------------------------------------------------------------------------------------------------------"
-# echo "----- install overops"
-# echo "---------------------------------------------------------------------------------------------------------------"
-# echo " "
+#echo " "
+#echo "---------------------------------------------------------------------------------------------------------------"
+#echo "----- install overops"
+#echo "---------------------------------------------------------------------------------------------------------------"
+#echo " "
+#
+#curl -sL /dev/null http://get.takipi.com | sudo bash /dev/stdin -i --sk=S36579#bLFSWU3y+KL7s5kP#Ulu1V6TctQOeemsAKFeWiK09lzHRHEkX5HGbx7pL3N4=#386e
+#
+#export JAVA_TOOL_OPTIONS="-agentlib:TakipiAgent"
 
-# curl -sL /dev/null http://get.takipi.com | sudo bash /dev/stdin -i --sk=S36579#bLFSWU3y+KL7s5kP#Ulu1V6TctQOeemsAKFeWiK09lzHRHEkX5HGbx7pL3N4=#386e
-
-# export JAVA_TOOL_OPTIONS="-agentlib:TakipiAgent"
 
 echo " "
 echo "---------------------------------------------------------------------------------------------------------------"
@@ -69,6 +83,7 @@ echo "----- running ambari setup"
 echo "---------------------------------------------------------------------------------------------------------------"
 echo " "
 
+ambari-server setup --jdbc-db=mysql --jdbc-driver=/usr/share/java/mysql-connector-java.jar
 ambari-server setup --silent --java-home=$JAVA_HOME
 
 echo " "
@@ -141,3 +156,4 @@ echo "--------------------------------------------------------------------------
 echo " "
 
 yum clean all
+rm -rf /var/cache/yum

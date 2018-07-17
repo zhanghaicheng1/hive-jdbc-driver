@@ -25,7 +25,8 @@
     {
       "superset": {
         "properties": {
-          "SUPERSET_DATABASE_TYPE": "sqlite"
+          "SUPERSET_DATABASE_TYPE": "sqlite",
+          "SECRET_KEY": "password"
         }
       }
     }
@@ -36,9 +37,9 @@
       "configurations": [],
       "cardinality": "1",
       "components": [
-        {
+       /* {
           "name": "MYSQL_SERVER"
-        },
+        },*/
         {
           "name": "NAMENODE"
         },
